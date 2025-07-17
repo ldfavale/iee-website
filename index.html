@@ -91,7 +91,7 @@
             margin: 0 auto 30px;
             display: block;
             filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
-            animation: logoFloat 3s ease-in-out infinite;
+            
         }
         
         @keyframes logoFloat {
@@ -123,7 +123,6 @@
             font-size: 1.1rem;
             display: inline-block;
             margin-bottom: 25px;
-            animation: pulse 2s infinite;
             box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
             border: 2px solid #fcd34d;
         }
@@ -165,6 +164,7 @@
             margin-bottom: 40px;
             font-style: italic;
             position: relative;
+            display: block;
         }
         
         .purpose::before,
@@ -172,17 +172,17 @@
             content: '✨';
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-20%);
             font-size: 1.2rem;
             animation: sparkle 2s ease-in-out infinite;
         }
         
         .purpose::before {
-            left: -30px;
+            left: 0px;
         }
         
         .purpose::after {
-            right: -30px;
+            right: 10px;
             animation-delay: 1s;
         }
         
@@ -247,6 +247,12 @@
         
         .contact-item a {
             color: #1e40af;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        a.contact-item {
+            color: inherit;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
@@ -374,7 +380,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="./assets/logo-iee.png" alt="Instituto Educativo Evangélico Logo" class="logo">
+        <img src="assets/logo_iee.png" alt="Logo IEE" class="logo">
         
         <h1 class="title">Instituto Educativo Evangélico</h1>
         <p class="subtitle">Colegio Cristiano - "Un lugar para todos"</p>
@@ -397,11 +403,13 @@
         </div>
         
         <div class="contact-info">
-            <div class="contact-item">
-                <h4>📍 Ubicación</h4>
-                <p>Joaquín de Viana 873</p>
-                <p>Maldonado, Uruguay</p>
-            </div>
+            <!-- <div class="contact-item"> -->
+                <a href="https://maps.app.goo.gl/JKZ9X8iDFM5Wg3ja8" target="_blank" class="contact-item">
+                    <h4>📍 Ubicación</h4>
+                    <p>Joaquín de Viana 873</p>
+                    <p>Maldonado, Uruguay</p>
+                </a>
+                <!-- </div> -->
             
             <div class="contact-item">
                 <h4>📞 Teléfonos</h4>
@@ -414,10 +422,7 @@
                 <p><a href="mailto:contacto@iee.edu.uy">contacto@iee.edu.uy</a></p>
             </div>
             
-            <div class="contact-item">
-                <h4>🌐 Web</h4>
-                <p><a href="https://www.iee.edu.uy">www.iee.edu.uy</a></p>
-            </div>
+            
         </div>
         
         <div class="social-links">
