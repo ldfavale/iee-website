@@ -201,19 +201,13 @@ const HeroSlider = () => {
                 isActive={index === currentSlide} 
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
           </div>
         ))}
       </div>
 
       <header className="relative z-20">
-                        {/* Natural gradient overlay that fades from edges to center */}
-        {/* <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#373737]/20 z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#373737]/60 via-[#373737]/50 via-[#373737]/40 via-[#373737]/30 via-[#373737]/20 via-[#373737]/15 via-[#373737]/10 via-[#373737]/5 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-[#373737]/50 z-0"></div> */}
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#0f1f2e]/20 z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0f1f2e]/70 via-[#0f1f2e]/60 via-[#0f1f2e]/50 via-[#0f1f2e]/40 via-[#0f1f2e]/30 via-[#0f1f2e]/20 via-[#0f1f2e]/15 via-[#0f1f2e]/10 to-transparent z-0"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-[#0f1f2e]/60 z-0"></div>
+                        {/* Top gradient overlay */}
+        <div className="absolute inset-0 h-64 bg-gradient-to-b from-[#0f1f2e]/70 via-[#0f1f2e]/65 via-[#0f1f2e]/60 via-[#0f1f2e]/55 via-[#0f1f2e]/50 via-[#0f1f2e]/45 via-[#0f1f2e]/40 via-[#0f1f2e]/25 to-transparent z-0"></div>
         
         <nav className="relative z-30 flex items-center justify-center px-8 py-6" role="navigation">
           <div className="flex items-center justify-center w-full max-w-6xl space-x-16">
@@ -269,8 +263,8 @@ const HeroSlider = () => {
         </div>
       </div> */}
 
-      {/* Bottom gradient overlay for content */}
-      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#0f1f2e]/80 via-[#0f1f2e]/60 via-[#0f1f2e]/40 via-[#0f1f2e]/20 to-transparent z-10"></div>
+      {/* Bottom gradient overlay for content - inverted version of top gradient */}
+      <div className="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#0f1f2e]/65 via-[#0f1f2e]/60 via-[#0f1f2e]/55 via-[#0f1f2e]/50 via-[#0f1f2e]/45 via-[#0f1f2e]/40 via-[#0f1f2e]/30 via-[#0f1f2e]/20 to-transparent z-10"></div>
       
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20  text-white text-center">
         <p className="text-2xl mb-4 uppercase font-thin text-center mr-18 ">
@@ -342,7 +336,7 @@ const HeroSlider = () => {
       </div>
 
       {slides[currentSlide]?.type === 'video' && !isVideoLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/20">
+        <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/10">
           <div className="animate-spin rounded-full h-12 w-12 border-2 border-white border-t-transparent"></div>
         </div>
       )}
