@@ -219,14 +219,17 @@ const HeroSlider = () => {
           <div className="flex items-center justify-center w-full max-w-6xl space-x-16">
             {/* Left side navigation */}
             <div className="flex items-center space-x-8">
-              <a href="#admisiones" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#admisiones" className="group relative text-white font-semibold transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
                 INICIO
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#acerca" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#acerca" className="group relative text-white font-semibold transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
                 QUIENES SOMOS
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#academicos" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#academicos" className="group relative text-white font-semibold transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
                 ACADÉMICO
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             </div>
             
@@ -239,14 +242,17 @@ const HeroSlider = () => {
             
             {/* Right side navigation */}
             <div className="flex items-center space-x-8">
-              <a href="#novedades" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#novedades" className="group relative text-white font-semibold transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
                 NOVEDADES
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#vida-estudiantil" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#vida-estudiantil" className="group relative text-white font-semibold transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
                 VIDA ESTUDIANTIL
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#contacto" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#contacto" className="group relative text-white font-semibold transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
                 CONTACTO
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-200 transition-all duration-300 group-hover:w-full"></span>
               </a>
             </div>
           </div>
