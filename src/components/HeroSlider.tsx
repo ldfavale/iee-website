@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -264,9 +264,9 @@ const HeroSlider = () => {
       </div> */}
 
       {/* Bottom gradient overlay for content - inverted version of top gradient */}
-      <div className="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-[#0f1f2e]/65 via-[#0f1f2e]/60 via-[#0f1f2e]/55 via-[#0f1f2e]/50 via-[#0f1f2e]/45 via-[#0f1f2e]/40 via-[#0f1f2e]/30 via-[#0f1f2e]/20 to-transparent z-10"></div>
+      <div className="absolute bottom-0 inset-x-0 h-96 bg-gradient-to-t from-[#0f1f2e]/85 to-transparent z-10"></div>
       
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20  text-white text-center">
+      <div className="absolute bottom-26 left-1/2 transform -translate-x-1/2 z-20  text-white text-center">
         <p className="text-2xl mb-4 uppercase font-thin text-center mr-18 ">
            <span className='font-bold'>Educación</span>   con 
         </p>
@@ -288,7 +288,7 @@ const HeroSlider = () => {
       <div className="absolute bottom-8 left-8 z-20">
         <button
           onClick={togglePlay}
-          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none"
           aria-label={isPlaying ? 'Pausar presentación' : 'Reproducir presentación'}
           disabled={prefersReducedMotion || !isHydrated}
         >
@@ -303,7 +303,7 @@ const HeroSlider = () => {
       <div className="absolute bottom-8 right-8 z-20 flex items-center space-x-2">
         <button
           onClick={prevSlide}
-          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none"
           aria-label="Diapositiva anterior"
         >
           <ChevronLeft className="w-3 h-3" />
@@ -311,28 +311,19 @@ const HeroSlider = () => {
 
         <button
           onClick={nextSlide}
-          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none"
           aria-label="Siguiente diapositiva"
         >
           <ChevronRight className="w-3 h-3" />
         </button>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2" role="tablist" aria-label="Navegación de diapositivas">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
-              index === currentSlide
-                ? 'bg-white scale-110'
-                : 'bg-white/50 hover:bg-white/75'
-            }`}
-            aria-label={`Ir a diapositiva ${index + 1}`}
-            role="tab"
-            aria-selected={index === currentSlide}
-          />
-        ))}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <a href="#content" aria-label="Scroll down">
+          <div className="animate-subtle-bounce">
+            <ChevronDown className="w-5 h-5 text-white drop-shadow-md" />
+          </div>
+        </a>
       </div>
 
       {slides[currentSlide]?.type === 'video' && !isVideoLoaded && (
