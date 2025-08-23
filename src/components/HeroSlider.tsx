@@ -1,0 +1,347 @@
+'use client';
+
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+
+// Custom hook to handle hydration safely
+const useHydrationSafeState = (initialValue: boolean) => {
+  const [value, setValue] = useState(initialValue);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  return [value, setValue, isHydrated] as const;
+};
+
+interface Slide {
+  id: string;
+  type: 'image' | 'video';
+  src: string;
+  webp?: string;
+  poster?: string;
+  alt: string;
+  priority?: boolean;
+}
+
+const OptimizedImage = React.memo(({ slide, isActive }: { slide: Slide; isActive: boolean }) => (
+  <picture>
+    {slide.webp && (
+      <source srcSet={slide.webp} type="image/webp" />
+    )}
+    <img
+      src={slide.src}
+      alt={slide.alt}
+      className="w-full h-full object-cover"
+      loading={slide.priority ? 'eager' : 'lazy'}
+      decoding={isActive ? 'sync' : 'async'}
+    />
+  </picture>
+));
+OptimizedImage.displayName = 'OptimizedImage';
+
+const OptimizedVideo = React.memo(({ slide, index, isActive, videoRefs, setIsVideoLoaded }: { slide: Slide; index: number; isActive: boolean; videoRefs: React.MutableRefObject<(HTMLVideoElement | null)[]>; setIsVideoLoaded: React.Dispatch<React.SetStateAction<boolean>> }) => (
+  <video
+    ref={(el) => { videoRefs.current[index] = el; }}
+    className="w-full h-full object-cover"
+    muted
+    loop
+    playsInline
+    preload={isActive ? 'auto' : 'metadata'}
+    poster={slide.poster}
+    onLoadedData={() => setIsVideoLoaded(true)}
+    onError={(e: React.SyntheticEvent<HTMLVideoElement, Event>) => console.warn('Video load error:', e)}
+  >
+    <source src={slide.src} type="video/mp4" />
+    Su navegador no soporta videos HTML5.
+  </video>
+));
+OptimizedVideo.displayName = 'OptimizedVideo';
+
+
+const HeroSlider = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion, isHydrated] = useHydrationSafeState(false);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (isHydrated) {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setPrefersReducedMotion(mediaQuery.matches);
+      
+      const handleChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+  }, [isHydrated, setPrefersReducedMotion]);
+
+  const slides = useMemo<Slide[]>(() => [
+    {
+      id: 'slide-1',
+      type: 'image',
+      src: '/assets/slider/slider1.jpeg',
+      alt: 'Instalaciones del Instituto Educativo Evangélico',
+      priority: true
+    },
+    {
+      id: 'slide-2',
+      type: 'image',
+      src: '/assets/slider/slider2.jpeg',
+      alt: 'Actividades educativas del IEE'
+    },
+    {
+      id: 'slide-3',
+      type: 'image',
+      src: '/assets/slider/slider3.jpeg',
+      alt: 'Comunidad estudiantil del IEE'
+    },
+    {
+      id: 'slide-4',
+      type: 'video',
+      src: '/assets/slider/slider4.mp4',
+      poster: '/assets/slider/slider3.jpeg',
+      alt: 'Video promocional del IEE'
+    }
+  ], []);
+
+  const startAutoplay = useCallback(() => {
+    if (prefersReducedMotion || !isHydrated) return;
+    
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prev) => {
+        const next = (prev + 1) % slides.length;
+        if (slides[next]?.type === 'video' && videoRefs.current[next]) {
+          videoRefs.current[next]?.load();
+        }
+        return next;
+      });
+    }, 5000);
+  }, [slides, prefersReducedMotion, isHydrated]);
+
+  const stopAutoplay = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isPlaying) {
+      startAutoplay();
+    } else {
+      stopAutoplay();
+    }
+    return stopAutoplay;
+  }, [isPlaying, startAutoplay, stopAutoplay]);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    
+    const currentVideo = videoRefs.current[currentSlide];
+    
+    if (slides[currentSlide]?.type === 'video' && currentVideo) {
+      if (isPlaying && !prefersReducedMotion) {
+        currentVideo.play().catch(console.warn);
+      } else {
+        currentVideo.pause();
+      }
+    }
+
+    videoRefs.current.forEach((video, index) => {
+      if (video && index !== currentSlide) {
+        video.pause();
+      }
+    });
+  }, [currentSlide, isPlaying, prefersReducedMotion, slides, isHydrated]);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, [slides.length]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  }, [slides.length]);
+
+  const togglePlay = useCallback(() => {
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentSlide(index);
+  }, []);
+
+  return (
+    <div className="relative w-full h-screen overflow-hidden bg-gray-900">
+      <div className="absolute inset-0" role="img" aria-label="Slider de hero">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+            aria-hidden={index !== currentSlide}
+          >
+            {slide.type === 'video' ? (
+              <OptimizedVideo 
+                slide={slide} 
+                index={index} 
+                isActive={index === currentSlide}
+                videoRefs={videoRefs}
+                setIsVideoLoaded={setIsVideoLoaded}
+              />
+            ) : (
+              <OptimizedImage 
+                slide={slide} 
+                isActive={index === currentSlide} 
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+          </div>
+        ))}
+      </div>
+
+      <header className="relative z-20">
+                        {/* Natural gradient overlay that fades from edges to center */}
+        {/* <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#373737]/20 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#373737]/60 via-[#373737]/50 via-[#373737]/40 via-[#373737]/30 via-[#373737]/20 via-[#373737]/15 via-[#373737]/10 via-[#373737]/5 to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-[#373737]/50 z-0"></div> */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#0f1f2e]/20 z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0f1f2e]/70 via-[#0f1f2e]/60 via-[#0f1f2e]/50 via-[#0f1f2e]/40 via-[#0f1f2e]/30 via-[#0f1f2e]/20 via-[#0f1f2e]/15 via-[#0f1f2e]/10 to-transparent z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-[#0f1f2e]/60 z-0"></div>
+        
+        <nav className="relative z-30 flex items-center justify-center px-8 py-6" role="navigation">
+          <div className="flex items-center justify-center w-full max-w-6xl space-x-16">
+            {/* Left side navigation */}
+            <div className="flex items-center space-x-8">
+              <a href="#admisiones" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+                INICIO
+              </a>
+              <a href="#acerca" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+                QUIENES SOMOS
+              </a>
+              <a href="#academicos" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+                ACADÉMICO
+              </a>
+            </div>
+            
+            {/* Center logo */}
+            <div className="flex-shrink-0">
+              <Link href="/">
+                <Image src="/assets/logo.png" alt="IEE Logo" width={120} height={50} className="h-auto" />
+              </Link>
+            </div>
+            
+            {/* Right side navigation */}
+            <div className="flex items-center space-x-8">
+              <a href="#novedades" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+                NOVEDADES
+              </a>
+              <a href="#vida-estudiantil" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+                VIDA ESTUDIANTIL
+              </a>
+              <a href="#contacto" className="text-white font-semibold hover:text-blue-200 transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+                CONTACTO
+              </a>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      {/* <div className="absolute inset-0 flex items-center justify-center z-10">
+        <div className="text-center text-white px-8 max-w-4xl">
+          <div className="mb-8" role="banner">
+            <p className="text-lg font-light tracking-wide mb-4 text-lg">
+              CREEMOS EN EL PODER DE LA
+            </p>
+          </div>
+        </div>
+      </div> */}
+
+      {/* Bottom gradient overlay for content */}
+      <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#0f1f2e]/80 via-[#0f1f2e]/60 via-[#0f1f2e]/40 via-[#0f1f2e]/20 to-transparent z-10"></div>
+      
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20  text-white text-center">
+        <p className="text-2xl mb-4 uppercase font-thin text-center mr-18 ">
+           <span className='font-bold'>Educación</span>   con 
+        </p>
+        <h1 className="font-thin tracking-wider leading-none text-8xl uppercase">
+          <span 
+            className="text-transparent font-thin font-family-sans"
+            style={{
+              WebkitTextStroke: '1px white',
+              WebkitTextFillColor: 'transparent',
+              letterSpacing: '0.1em'
+            } as React.CSSProperties}
+            aria-label="PROPOSITO"
+          >
+            Propósito
+          </span>
+        </h1>
+      </div>
+
+      <div className="absolute bottom-8 left-8 z-20">
+        <button
+          onClick={togglePlay}
+          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          aria-label={isPlaying ? 'Pausar presentación' : 'Reproducir presentación'}
+          disabled={prefersReducedMotion || !isHydrated}
+        >
+          {isPlaying ? (
+            <Pause className="w-3 h-3" />
+          ) : (
+            <Play className="w-3 h-3 ml-0.5" />
+          )}
+        </button>
+      </div>
+
+      <div className="absolute bottom-8 right-8 z-20 flex items-center space-x-2">
+        <button
+          onClick={prevSlide}
+          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          aria-label="Diapositiva anterior"
+        >
+          <ChevronLeft className="w-3 h-3" />
+        </button>
+
+        <button
+          onClick={nextSlide}
+          className="w-8 h-8 rounded-full border border-white/50 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          aria-label="Siguiente diapositiva"
+        >
+          <ChevronRight className="w-3 h-3" />
+        </button>
+      </div>
+
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2" role="tablist" aria-label="Navegación de diapositivas">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
+              index === currentSlide
+                ? 'bg-white scale-110'
+                : 'bg-white/50 hover:bg-white/75'
+            }`}
+            aria-label={`Ir a diapositiva ${index + 1}`}
+            role="tab"
+            aria-selected={index === currentSlide}
+          />
+        ))}
+      </div>
+
+      {slides[currentSlide]?.type === 'video' && !isVideoLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/20">
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-white border-t-transparent"></div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default HeroSlider;
