@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause, ChevronDown } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause, ChevronDown, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -67,6 +67,7 @@ const HeroSlider = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion, isHydrated] = useHydrationSafeState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -206,10 +207,25 @@ const HeroSlider = () => {
       </div>
 
       <header className="relative z-20">
-                        {/* Top gradient overlay */}
-        <div className="absolute inset-0 h-64 bg-gradient-to-b from-[#0f1f2e]/70 via-[#0f1f2e]/65 via-[#0f1f2e]/60 via-[#0f1f2e]/55 via-[#0f1f2e]/50 via-[#0f1f2e]/45 via-[#0f1f2e]/40 via-[#0f1f2e]/25 to-transparent z-0"></div>
+        {/* Top gradient overlay */}
+        <div className="absolute inset-0 h-48 md:h-64 bg-gradient-to-b from-[#0f1f2e]/70 via-[#0f1f2e]/50 to-transparent z-0"></div>
         
-        <nav className="relative z-30 flex items-center justify-center px-8 py-6" role="navigation">
+        {/* Mobile and Tablet Nav */}
+        <nav className="relative z-30 lg:hidden flex items-center justify-between px-4 sm:px-8 py-6">
+          <Link href="/">
+            <Image src="/assets/logo.png" alt="IEE Logo" width={100} height={40} className="h-auto w-24" />
+          </Link>
+          <button 
+            onClick={() => setIsMenuOpen(true)} 
+            className="text-white p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            aria-label="Abrir menú"
+          >
+            <Menu className="w-7 h-7" />
+          </button>
+        </nav>
+
+        {/* Desktop Nav */}
+        <nav className="relative z-30 hidden lg:flex items-center justify-center px-8 py-6" role="navigation">
           <div className="flex items-center justify-center w-full max-w-6xl space-x-16">
             {/* Left side navigation */}
             <div className="flex items-center space-x-8">
@@ -253,24 +269,37 @@ const HeroSlider = () => {
         </nav>
       </header>
 
-      {/* <div className="absolute inset-0 flex items-center justify-center z-10">
-        <div className="text-center text-white px-8 max-w-4xl">
-          <div className="mb-8" role="banner">
-            <p className="text-lg font-light tracking-wide mb-4 text-lg">
-              CREEMOS EN EL PODER DE LA
-            </p>
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="lg:hidden fixed inset-0 bg-[#0f1f2e]/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center" role="dialog" aria-modal="true">
+          <div className="absolute top-6 right-4 sm:right-8">
+            <button 
+              onClick={() => setIsMenuOpen(false)} 
+              className="text-white p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-label="Cerrar menú"
+            >
+              <X className="w-8 h-8" />
+            </button>
           </div>
+          <nav className="flex flex-col items-center space-y-8">
+            <a href="#admisiones" onClick={() => setIsMenuOpen(false)} className="text-white text-2xl font-semibold">INICIO</a>
+            <a href="#acerca" onClick={() => setIsMenuOpen(false)} className="text-white text-2xl font-semibold">QUIENES SOMOS</a>
+            <a href="#academicos" onClick={() => setIsMenuOpen(false)} className="text-white text-2xl font-semibold">ACADÉMICO</a>
+            <a href="#novedades" onClick={() => setIsMenuOpen(false)} className="text-white text-2xl font-semibold">NOVEDADES</a>
+            <a href="#vida-estudiantil" onClick={() => setIsMenuOpen(false)} className="text-white text-2xl font-semibold">VIDA ESTUDIANTIL</a>
+            <a href="#contacto" onClick={() => setIsMenuOpen(false)} className="text-white text-2xl font-semibold">CONTACTO</a>
+          </nav>
         </div>
-      </div> */}
+      )}
 
-      {/* Bottom gradient overlay for content - inverted version of top gradient */}
-      <div className="absolute bottom-0 inset-x-0 h-96 bg-gradient-to-t from-[#0f1f2e]/85 to-transparent z-10"></div>
+      {/* Bottom gradient overlay for content */}
+      <div className="absolute bottom-0 inset-x-0 h-64 md:h-96 bg-gradient-to-t from-[#0f1f2e]/85 to-transparent z-10"></div>
       
-      <div className="absolute bottom-26 left-1/2 transform -translate-x-1/2 z-20  text-white text-center">
-        <p className="text-2xl mb-4 uppercase font-thin text-center mr-18 ">
-           <span className='font-bold'>Educación</span>   con 
+      <div className="absolute bottom-28 sm:bottom-32 md:bottom-26 left-1/2 transform -translate-x-1/2 z-20 text-white text-center w-full px-4">
+        <p className="text-xl md:text-2xl mb-4 uppercase font-thin text-center">
+           <span className='font-bold'>Educación</span> con 
         </p>
-        <h1 className="font-thin tracking-wider leading-none text-8xl uppercase">
+        <h1 className="font-thin tracking-wider leading-none text-5xl sm:text-6xl lg:text-8xl uppercase">
           <span 
             className="text-transparent font-thin font-family-sans"
             style={{
@@ -318,7 +347,7 @@ const HeroSlider = () => {
         </button>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
         <a href="#content" aria-label="Scroll down">
           <div className="animate-subtle-bounce">
             <ChevronDown className="w-5 h-5 text-white drop-shadow-md" />
