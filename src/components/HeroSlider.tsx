@@ -301,7 +301,7 @@ const HeroSlider = () => {
         </p>
         <h1 className="font-thin tracking-wider leading-none text-5xl sm:text-6xl lg:text-8xl uppercase">
           <span 
-            className="text-transparent font-thin font-family-sans"
+            className="text-transparent font-black font-family-sans"
             style={{
               WebkitTextStroke: '1px white',
               WebkitTextFillColor: 'transparent',
