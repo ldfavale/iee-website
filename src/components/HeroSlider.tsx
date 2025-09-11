@@ -173,9 +173,7 @@ const HeroSlider = () => {
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
-  const goToSlide = useCallback((index: number) => {
-    setCurrentSlide(index);
-  }, []);
+
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-gray-900">
@@ -297,7 +295,7 @@ const HeroSlider = () => {
       
       <div className="absolute bottom-28 sm:bottom-32 md:bottom-26 left-1/2 transform -translate-x-1/2 z-20 text-white text-center w-full px-4">
         <p className="text-xl md:text-2xl mb-4 uppercase font-thin text-center">
-           <span class='font-bold'>Educación</span> con 
+           <span className='font-bold'>Educación</span> con 
         </p>
         <h1 className="font-thin tracking-wider leading-none text-5xl sm:text-6xl lg:text-8xl uppercase">
           <span 
