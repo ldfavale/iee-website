@@ -26,7 +26,7 @@ const VisionSection = () => {
   ];
 
   return (
-    <div className="relative bg-white">
+    <div className="relative bg-white pb-20">
       <div className="pointer-events-none absolute right-0 top-0  transform z-0">
         <h1 className="text-[50rem] font-serif italic  text-iee-blue opacity-5" style={{lineHeight: '0.8'}}>
           IEE

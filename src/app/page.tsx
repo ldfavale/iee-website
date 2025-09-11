@@ -10,7 +10,7 @@ export default function Home() {
       <VisionSection />
 
       {/* Testimonials Section */}
-      <section className="py-12 bg-gray-100">
+      <section className="py-32 bg-gray-100">
         <div className="container mx-auto px-4">
           {/* <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Testimonios</h2> */}
           <h2 className="font-serif text-5xl italic text-center text-gray-800 md:text-6xl">
