@@ -32,7 +32,7 @@ const VisionSection = () => {
           IEE
         </h1>
       </div>
-      <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 z-10">
+      <div className="relative mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8 z-10">
         <div className="grid grid-cols-1 items-center gap-x-16 gap-y-24 lg:grid-cols-2">
           <div className="flex flex-col">
             <h2 className="font-serif text-5xl italic text-gray-800 md:text-6xl">
@@ -45,11 +45,14 @@ const VisionSection = () => {
           <div></div>
         </div>
 
-        <div className="mt-28 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {educationLevels.map((level) => (
-            <EducationLevelCard key={level.title} {...level} />
-          ))}
-        </div>
+      </div>
+      <div className="relative mx-auto max-w-9xl px-8 sm:px-6 lg:px-8 z-10">
+
+          <div className="mt-28 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {educationLevels.map((level) => (
+              <EducationLevelCard key={level.title} {...level} />
+            ))}
+          </div>
       </div>
     </div>
   );

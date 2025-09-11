@@ -229,17 +229,17 @@ const HeroSlider = () => {
           <div className="flex items-center justify-center w-full max-w-6xl space-x-16">
             {/* Left side navigation */}
             <div className="flex items-center space-x-8">
-              <a href="#admisiones" className="group relative text-white font-semibold transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#admisiones" className="group relative text-white  transition-colors text-sm tracking-wide focus:outline-none   rounded text-center whitespace-nowrap">
                 INICIO
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#acerca" className="group relative text-white font-semibold transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#acerca" className="group relative text-white  transition-colors text-sm tracking-wide focus:outline-none   rounded text-center whitespace-nowrap">
                 QUIENES SOMOS
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#academicos" className="group relative text-white font-semibold transition-colors text-sm tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#academicos" className="group relative text-white  transition-colors text-sm tracking-wide focus:outline-none   rounded text-center whitespace-nowrap">
                 ACADÉMICO
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             </div>
             
@@ -252,17 +252,17 @@ const HeroSlider = () => {
             
             {/* Right side navigation */}
             <div className="flex items-center space-x-8">
-              <a href="#novedades" className="group relative text-white font-semibold transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#novedades" className="group relative text-white  transition-colors text-sm font-medium tracking-wide focus:outline-none rounded text-center whitespace-nowrap">
                 NOVEDADES
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#vida-estudiantil" className="group relative text-white font-semibold transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#vida-estudiantil" className="group relative text-white  transition-colors text-sm font-medium tracking-wide focus:outline-none  rounded text-center whitespace-nowrap">
                 VIDA ESTUDIANTIL
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#contacto" className="group relative text-white font-semibold transition-colors text-sm font-medium tracking-wide focus:outline-none focus:ring-2 focus:ring-blue-300 rounded text-center whitespace-nowrap">
+              <a href="#contacto" className="group relative text-white  transition-colors text-sm font-medium tracking-wide focus:outline-none  rounded text-center whitespace-nowrap">
                 CONTACTO
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-200 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-blue-200 transition-all duration-300 group-hover:w-full"></span>
               </a>
             </div>
           </div>
@@ -271,7 +271,7 @@ const HeroSlider = () => {
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-[#0f1f2e]/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center" role="dialog" aria-modal="true">
+        <div className="lg:hidden fixed inset-0 bg-[#0f1f2e]/95 backdrop-blur-.sm z-50 flex flex-col items-center justify-center" role="dialog" aria-modal="true">
           <div className="absolute top-6 right-4 sm:right-8">
             <button 
               onClick={() => setIsMenuOpen(false)} 
@@ -297,7 +297,7 @@ const HeroSlider = () => {
       
       <div className="absolute bottom-28 sm:bottom-32 md:bottom-26 left-1/2 transform -translate-x-1/2 z-20 text-white text-center w-full px-4">
         <p className="text-xl md:text-2xl mb-4 uppercase font-thin text-center">
-           <span className='font-bold'>Educación</span> con 
+           <span class='font-bold'>Educación</span> con 
         </p>
         <h1 className="font-thin tracking-wider leading-none text-5xl sm:text-6xl lg:text-8xl uppercase">
           <span 

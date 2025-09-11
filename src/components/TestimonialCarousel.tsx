@@ -8,31 +8,31 @@ const testimonialsData = [
     text: "I continue to hold Chapin in a special place in my heart. Being there fueled me with a confidence and thirst for knowledge that is noticeable to all who encounter me. The assumed meekness of women is a detrimental force, holding back many women in the world, but not me. I received an education in an environment that taught me my voice should always be heard. That is the Chapin difference.",
     author: "Faith Bourne",
     role: "Class of 2019",
-    image: "/assets/slider/slider1.jpeg"
+    image: "/assets/images/testimonials/testimonio1.jpeg"
   },
   {
     text: "No puedo describir lo bien que se han adaptado mis dos hijos al Colegio IEE desde que nos vinimos de Canadá en 2022. El colegio se preocupa profundamente por las necesidades unicas de cada niño. Sus mentes y corazones crecen día a día. Creo firmemente que enviar a sus hijos aquí será una bendición para toda su familia.",
     author: "Tanya Salituro",
     role: "Madre de dos estudiantes",
-    image: "/assets/slider/slider2.jpeg"
+    image: "/assets/images/testimonials/testimonio2.jpeg"
   },
   {
     text: "Somos los papás de Fiorella y María Pía y estamos muy conformes por la dedicación y enseñanza que le brindan a nuestras hijas. Hace 4 años que formamos parte de esta gran familia llamada IEE.",
     author: "Nicolás y Natali",
     role: "Padres de Fiorella y María Pía",
-    image: "/assets/slider/slider3.jpeg"
+    image: "/assets/images/testimonials/testimonio3.jpeg"
   },
   {
     text: "Tenemos 4 hijos, a los cuales amamos, cuidamos e instruimos en la palabra de Dios, es nuestro anhelo que ellos crezcan confiando en sus promesas y puedan ser el día de mañana hombres y mujeres de bien y de buen testimonio para esta sociedad. Encontramos en IEE una institución que nació con el mismo anhelo, acompañando a los niños en sus etapas, reafirmando los valores familiares y con una visión cristiana que alumbra el camino y les permite a nuestros hijos divisar un futuro y una eternidad prometedora. Son 12 años confiando en IEE y animando a otros padres.",
     author: "Fabio y Nancy",
     role: "Padres de Evangelina y Elizabeth",
-    image: "/assets/slider/slider1.jpeg"
+    image: "/assets/images/testimonials/testimonio4.jpeg"
   },
   {
     text: "Another testimonial to show the carousel functionality. This is a great school and I am very happy with the education my children are receiving.",
     author: "John Doe",
     role: "Parent",
-    image: "/assets/slider/slider2.jpeg"
+    image: "/assets/images/testimonials/testimonio5.jpeg"
   }
 ];
 
